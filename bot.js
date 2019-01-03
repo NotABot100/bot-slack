@@ -1,7 +1,7 @@
 
 const { Builder, By, Key, until } = require('selenium-webdriver');
 //
-const credentials = require("./credentials.js");
+const credentials = require("./ignored/credentials.js");
 const botV = "BotV5";
 
 (async function example() {
