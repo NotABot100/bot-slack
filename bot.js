@@ -183,18 +183,19 @@ const botV = "BotV5";
                             textoADizer = await getMeme();
                         } else if(phraseSaid === "!gitclone") {
                             textoADizer = `
-                                I now exist in git!
-                                To clone me, just follow these steps:
-                                1- Open VSCode
-                                2- Press ctrl + p
-                                3- Type ">Git: Clone", then press enter
-                                4- Type "https://github.com/NotABot100/bot-slack.git", then press enter
-                                5- Choose the folder where you want the project to be cloned in
-                                6- On the bottom right corner, there's going to be a popup that asks you if you want to open the project you just cloned. Accept it. If you don't see it, you can just open the project the normal way (File -> Open Folder)
-                                7- In the cloned project, press ctrl + ç (to open the terminal)
-                                8- Type "npm install"
-                                9- Go to the "credentials.js" file, and type your slack and WTM username and password. When committing your changes, git will ignore this file (along with the whole node_modules folder)
-                                10- You're set! just type "node bot.js" whenever you want to run the bot!
+${botV}: I now exist in git!
+To clone me, just follow these steps:
+1- Open VSCode
+2- Press ctrl + p
+3- Type ">Git: Clone", then press enter
+4- Type "https://github.com/NotABot100/bot-slack.git", then press enter
+5- Choose the folder where you want the project to be cloned in
+6- On the bottom right corner, there's going to be a popup that asks you if you want to open the project you just cloned. Accept it. If you don't see it, you can just open the project the normal way (File -> Open Folder)
+7- In the cloned project, press ctrl + ç (to open the terminal)
+8- type "git update-index --skip-worktree credentials.js" then press enter
+9- Type "npm install" then press enter
+10- Go to the "credentials.js" file, and type your slack and WTM username and password. When committing your changes, git will ignore this file (along with the whole node_modules folder)
+11- You're set! just type "node bot.js" whenever you want to run the bot!
                                 `;
                         } else {
                             textoADizer = phraseSaid === "worst bot ever!"? botV + ": You can do your own, you have the code, you lazy ass." : await getHours(phraseSaid === "!rtime");
