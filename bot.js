@@ -130,7 +130,7 @@ const botV = "BotV5";
     //Note: even with this code, it might give the error... needs refactor... something like what I did on WTM's authentication
     await new Promise(resolve => setTimeout(resolve, 2000));
     //Note: substitute the "slack's username" and "slack's password"
-    await driver.findElement(By.id("email")).sendKeys("user slack", Key.TAB, "password do slack", Key.ENTER);
+    await driver.findElement(By.id("email")).sendKeys(credentials.slackUserName, Key.TAB, credentials.slackPassword, Key.ENTER);
     //group: GDJM06JKA // mine: DAP91VCSH
     await driver.get('https://insticc.slack.com/messages/GDJM06JKA');
     //}
@@ -145,7 +145,7 @@ const botV = "BotV5";
         await new Promise(resolve => setTimeout(resolve, 500));
         try{
             //Note: substitute the "WTM's username" and "WTM's password"
-            await driver.findElement(By.id("Username")).sendKeys("user WTM", Key.TAB, "password WTM", Key.ENTER);
+            await driver.findElement(By.id("Username")).sendKeys(credentials.WTMUserName, Key.TAB, credentials.WTMPassword, Key.ENTER);
             complete = true;
         } catch(e){}
     }
