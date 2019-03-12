@@ -2,10 +2,10 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 //
 const credentials = require("./credentials.js");
-const botV = "BotV5";
+const botV = "BotVAndreDestroyer";
 
 (async function example() {
-    const memePages = ["https://www.reddit.com/r/memes/new/", "https://www.reddit.com/r/dankmemes/new/", "https://www.reddit.com/r/me_irl/new/"]
+    const memePages = ["https://www.reddit.com/r/animemes/new/"]
     var currMemePage = 0;
     const nextMemePage = function(){
         currMemePage++;
@@ -156,6 +156,7 @@ const botV = "BotV5";
 
     var done = false
 
+    var andreIsBad = ["André is bad", "André is big gay", "André doens't know how to program", "André is alway late", "Andre sucks", "andré doesn't deserve his name to be written with an uppercase 'A'", "André is not cool", "André is addicted to coffee and smoking", "André is the worst", "André has a low IQ", "André is rude", "André is way too privileged... check your privilege", "André is weak", "André's bot sucks", "André is not funny", "André is a stereotypical millennial", "André is old" ]
     //for each second, it sees if the last thing typed was either "!time" or "!rtime", and if it is, it gets the time left and displays it
     for(var i = 1; i>0; i++){
         //wait one second
@@ -168,7 +169,7 @@ const botV = "BotV5";
             var dateNow = new Date();
             var foodTime = dateNow.getHours() === 12 && !foodTimeAlreadyDone;
         }
-        if(phraseSaid === "!time" || phraseSaid === "!rtime" || phraseSaid === "worst bot ever!" || phraseSaid === "!shame" || foodTime || phraseSaid === "!meme" || phraseSaid === "!gitclone"){
+        if(phraseSaid === "!time" || phraseSaid === "!rtime" || phraseSaid === "worst bot ever!" || phraseSaid === "!shame" || phraseSaid === "!destroyandre" || foodTime || phraseSaid === "!meme" || phraseSaid === "!gitclone"){
             //gets time and says it on slack (repeats while it isn't successful doing it)
             while(!done){
                 //try{
@@ -198,7 +199,11 @@ To clone me, just follow these steps:
 11- You're set! just type "node bot.js" whenever you want to run the bot!
                                 `;
                         } else {
-                            textoADizer = phraseSaid === "worst bot ever!"? botV + ": You can do your own, you have the code, you lazy ass." : await getHours(phraseSaid === "!rtime");
+                            if(phraseSaid === "!destroyandre"){
+                                textoADizer = botV + ": " + andreIsBad[Math.floor(Math.random()*andreIsBad.length)];
+                            }else{
+                                textoADizer = phraseSaid === "worst bot ever!"? botV + ": You can do your own, you have the code, you lazy ass." : await getHours(phraseSaid === "!rtime");
+                            }
                         }
                     }
                     console.log("texto a dizer: ", textoADizer);
