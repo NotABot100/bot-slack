@@ -61,12 +61,13 @@ var https = require('https');
     }
     const getMemeTest = async function (specificSub, howFarDate) {
         var nextSub = ((specificSub.startsWith("!") || specificSub==="")? nextSubPage() : specificSub);
+        console.log(howFarDate)
         howFarDate = availableTimeStamps.includes(howFarDate)? howFarDate : "month";
         var results;
         var textToSay;
         try{
             await new Promise((resolve, reject) => {
-
+                console.log("https://www.reddit.com/r/" + nextSub + "/top.json?t=" + howFarDate + "&limit=50")
                 https.get("https://www.reddit.com/r/" + nextSub + "/top.json?t=" + howFarDate + "&limit=50", (res) => {
                     var bodyChunks = [];
                     res.on('data', function (chunk) {
