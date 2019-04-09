@@ -1,7 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver');
 //
 const credentials = require("./credentials.js");
-const botV = "BotV6.4.3";
+const botV = "BotV6.5.3";
 var https = require('https');
 (async function example() {
     const memePages = ["https://www.reddit.com/r/memes/new/", "https://www.reddit.com/r/dankmemes/new/", "https://www.reddit.com/r/me_irl/new/"]
@@ -59,16 +59,20 @@ var https = require('https');
         }
         return subPages[currSubPage];
     }
-    const getMemeTest = async function (specificSub, howFarDate) {
+    const getMemeTest = async function (specificSub, howFarDate, specificRank) {
         var nextSub = ((specificSub.startsWith("!") || specificSub==="")? nextSubPage() : specificSub);
-        console.log(howFarDate)
+        howFarDate = howFarDate || "";
+        if(!isNaN(specificRank) && parseInt(specificRank) > 100)
+            specificRank = "100";
+        if(!isNaN(specificRank) && parseInt(specificRank) <= 0)
+            specificRank = "1";
         howFarDate = availableTimeStamps.includes(howFarDate)? howFarDate : "month";
         var results;
         var textToSay;
         try{
             await new Promise((resolve, reject) => {
-                console.log("https://www.reddit.com/r/" + nextSub + "/top.json?t=" + howFarDate + "&limit=50")
-                https.get("https://www.reddit.com/r/" + nextSub + "/top.json?t=" + howFarDate + "&limit=50", (res) => {
+                console.log("https://www.reddit.com/r/" + nextSub + "/top.json?t=" + howFarDate + "&limit=" + (!isNaN(specificRank)? parseInt(specificRank) : 50))
+                https.get("https://www.reddit.com/r/" + nextSub + "/top.json?t=" + howFarDate + "&limit=" + (!isNaN(specificRank)? parseInt(specificRank) : 50), (res) => {
                     var bodyChunks = [];
                     res.on('data', function (chunk) {
                         // You can process streamed parts here...
@@ -89,7 +93,7 @@ var https = require('https');
                 throw new Error();
             }
             var children = results.children;
-            var rng = Math.floor(Math.random() * children.length);
+            var rng = (!isNaN(specificRank)? parseInt(specificRank)-1 : Math.floor(Math.random() * children.length));
             var meme = children[rng].data;
             var memeLink = "www.reddit.com" + meme.permalink;
             var memeTitle = meme.title;
@@ -257,7 +261,7 @@ ${memeImageLink}
                     if (phraseSaid === "!shame") {
                         textoADizer = botV + ": Shame on you!";
                     } else if (phraseSaid.startsWith("!sub")) {
-                        textoADizer = await getMemeTest(phraseSaid.replace(/!sub /, "").split(" ")[0], phraseSaid.replace(/!sub \w+ /, ""));
+                        textoADizer = await getMemeTest(phraseSaid.replace(/!sub /, "").split(" ")[0], phraseSaid.replace(/!sub /, "").split(" ")[1], phraseSaid.replace(/!sub /, "").split(" ")[2]);
                     } else if (phraseSaid === "!subs") {
                         textoADizer = `${botV}: Oh look my reddit subs are:
                          `+ subPages.join(', ');
@@ -269,7 +273,7 @@ ${botV}: So you are in need of assistance?! Dont worry i finally have a list of 
 !time - Get the time you still need to be suffering today. :C
 !rtime - Lets just wish it might have been a bug and it wont take that long.
 !shame - Did someone say 'SHAME' *bells in the background* ${false? '!sub - Oh look a new command? i wonder what it does... ohhh.. we can all start Memeing harder!(pliz gib new reddits)' : ''}
-!sub - can be used with an extra word in front (name of a subreddit, and another extra word for the time stamps (type "!timestamps" to know the available ones) . Type "!subs" to see the default subs
+!sub - can be used with an extra word in front (name of a subreddit, and another extra word for the time stamps (type "!timestamps" to know the available ones), and another to indicate the ranking (a number). EX: !sub dankmemes day 1
 !timestamps - The time stamps available for the extra "!sub" field are: ${availableTimeStamps.join(", ")}
 !gitclone - I see you want to make your own bot?! Well good luck, Almeida was good Camarada!
 !subs - Well if you need to really know my secrets, i can always tell you some *wink* *wink* ;)
